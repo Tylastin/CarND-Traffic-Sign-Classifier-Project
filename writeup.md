@@ -29,7 +29,7 @@ The goals / steps of this project are the following:
 [image9]: ./examples/german4.png "Speed Limit (30km/h) Sign"
 [image10]: ./examples/german5.png "Yield Sign"
 
-[image11]: .../data/examples/softmax_output.jpg "Softmax Probabilities"
+[image11]: .../data/examples/softmax_output.png "Softmax Probabilities"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
