@@ -51,7 +51,7 @@ signs data set:
 * The size of training set is 34799
 * The size of the validation set is 4410
 * The size of test set is 12630
-* The shape of a traffic sign image is 32x32
+* The shape of a traffic sign image is 32x32x3
 * The number of unique classes/labels in the data set is 43
 
 #### 2. Include an exploratory visualization of the dataset.
@@ -109,17 +109,17 @@ My final model consisted of the following layers:
 
 To train the model, I used the AdamOptimizer with the following parameters:
 batch size: 100,
-epochs: 50
-learning rate: 0.0009
+epochs: 11
+learning rate: 0.0007
 mu = 0 (mean value for tf.truncated_normal)
 sigma = 0.1 (standard deviation value for tf.truncated_normal)
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
-* training set accuracy of 99.1%
-* validation set accuracy of 94.9%
-* test set accuracy of 93.4%
+* training set accuracy of 99.4.2%
+* validation set accuracy of 93.0%
+* test set accuracy of 92.1%
 
 
 * What was the first architecture that was tried and why was it chosen?
@@ -135,7 +135,9 @@ The architecture performed reasonably well but the validation accuracy was well 
 A total of three 3x3 convolution (conv2d, relu, max_pooling) layers ( with more features than the LeNet architecture) were used allow better fitting of the data. A dropout was added to one of the fully connected layers to prevent overfitting.
 
 * Which parameters were tuned? How were they adjusted and why?
-The batch size, number of epochs, learning rate were tuned to achieve higher validation accuracy. They were adjusted iteratively, and the most optimally performing values were kept.
+The batch size, number of epochs, learning rate were tuned to achieve higher validation accuracy. They were adjusted iteratively, and the most optimally performing values were kept. For example, to find the optimal number of epochs ( 11 ), 75 epochs were run and the validation accuracy was tracked. Training for more than 11 epochs failed to result in significant improvement in the validation set accuracy, so the epochs value was set to 11. All else constant, increasing epochs would likely result in overfitting. Decreasing epochs would likely result in underfitting. 
+
+Furthermore code was implemented that keeps track of the best vaidation accuracy and how many epochs have passed without improvement on the that accuracy. Once 4 consecutive epochs fail to surpass the best validation accuracy, training is terminated. This prevents overfitting and wasting computation time. 
 
 
 * What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
@@ -159,19 +161,19 @@ Here are the results of the prediction:
 
 | Image			        |     Prediction	        					|
 |:---------------------:|:---------------------------------------------:|
-| Double Curve      		| No Passing   									|
-| Keep Right     			| Turn Right Ahead								|
-| 60 km/h						| 60 km/h											|
-| 30 km/h	      		| 60 km/h						 				|
-| Yield			| Turn Right Ahead      							|
+| Double Curve      		| No passing for vehicles over 3.5 metric tons   									|
+| Keep Right     			| Yield								|
+| 60 km/h						| Yield											|
+| 30 km/h	      		| Yield						 				|
+| Yield			| Yield      							|
 
 
-The model was able to correctly guess 1 of the 5 traffic signs, which gives an accuracy of 20%. This compares unfavorably to the accuracy on the test set of 93.4%. Augmented the dataset to add more images from the underrepresented classes could improve performance. Also augmenting the training set with random transformations such as translation and scaling could further improve performance.
+The model was able to correctly guess 1 of the 5 traffic signs, which gives an accuracy of 20%. This compares unfavorably to the accuracy on the test set of 92.1%. Augmenting the dataset by adding more images from the underrepresented classes could improve performance. Also augmenting the training set with random transformations such as translation and scaling could further improve performance.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability.
 
 The code for making predictions on my final model is located in the final cell of the Ipython notebook.
 
-The image below shows the softmax probabilities for each german traffic sign. The model was only able to correctly classify the 60 km/h sign and it did so with 71% certainty.
+The image below shows the softmax probabilities for each german traffic sign. The model was only able to correctly classify the yield sign and it did so with 33% certainty.
 Here is an image of the output
 ![alt text][image11]
