@@ -105,7 +105,7 @@ My final model consisted of the following layers:
 
 
 
-#### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+#### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyper-parameters such as learning rate.
 
 To train the model, I used the AdamOptimizer with the following parameters:
 batch size: 100,
@@ -137,43 +137,8 @@ A total of three 3x3 convolution (conv2d, relu, max_pooling) layers ( with more 
 * Which parameters were tuned? How were they adjusted and why?
 The batch size, number of epochs, learning rate were tuned to achieve higher validation accuracy. They were adjusted iteratively, and the most optimally performing values were kept. For example, to find the optimal number of epochs ( 11 ), 75 epochs were run and the validation accuracy was tracked. Training for more than 11 epochs failed to result in significant improvement in the validation set accuracy, so the epochs value was set to 11. All else constant, increasing epochs would likely result in overfitting. Decreasing epochs would likely result in underfitting. 
 
-Furthermore code was implemented that keeps track of the best vaidation accuracy and how many epochs have passed without improvement on the that accuracy. Once 4 consecutive epochs fail to surpass the best validation accuracy, training is terminated. This prevents overfitting and wasting computation time. 
+Furthermore code was implemented that keeps track of the best validation accuracy and how many epochs have passed without improvement on the that accuracy. Once 4 consecutive epochs fail to surpass the best validation accuracy, training is terminated. This prevents overfitting and wasting computation time.
 
 
 * What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
 Convolution layers were used because they are effective for image classification due to translational invariance. The dropout layer was added because it prevents overfitting by forcing the model not to rely too heavily on a few features.
-
-### Test a Model on New Images
-
-#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
-
-Here are five German traffic signs that I found on the web:
-
-![alt text][image6] ![alt text][image7] ![alt text][image8]
-![alt text][image9] ![alt text][image10]
-
-The chosen images are difficult to classify because the images are of different sizes and the signs in the are off-center and at different angles. Also, some of the traffic signs such as double curve were underrepresented in the training set.  
-
-#### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set
-
-
-Here are the results of the prediction:
-
-| Image			        |     Prediction	        					|
-|:---------------------:|:---------------------------------------------:|
-| Double Curve      		| No passing for vehicles over 3.5 metric tons   									|
-| Keep Right     			| Yield								|
-| 60 km/h						| Yield											|
-| 30 km/h	      		| Yield						 				|
-| Yield			| Yield      							|
-
-
-The model was able to correctly guess 1 of the 5 traffic signs, which gives an accuracy of 20%. This compares unfavorably to the accuracy on the test set of 92.1%. Augmenting the dataset by adding more images from the underrepresented classes could improve performance. Also augmenting the training set with random transformations such as translation and scaling could further improve performance.
-
-#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability.
-
-The code for making predictions on my final model is located in the final cell of the Ipython notebook.
-
-The image below shows the softmax probabilities for each german traffic sign. The model was only able to correctly classify the yield sign and it did so with 33% certainty.
-Here is an image of the output
-![alt text][image11]
